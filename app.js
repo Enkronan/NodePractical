@@ -10,7 +10,7 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
 app.all('/', (req,res) => {
-    res.render('index', {msg: "welcome to Robins node app"})
+    res.render('index', {msg: "welcome to Robins node app", articles: []})
 })
 
 app.get('/test', (req,res) => {
@@ -18,6 +18,12 @@ app.get('/test', (req,res) => {
     {msg: "welcome to Robins node app",
     title: "Test",
     body: "Body test"})
+})
+
+app.get('/article', (req,res) => {
+    res.render('article', 
+    {title: "welcome to Robins node app",
+    text: "Test"})
 })
 
 const server = http.createServer(app)
