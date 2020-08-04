@@ -1,7 +1,9 @@
+extends layout
 
-//Using mixins which can be used as functions or macros in Jinja2
-mixin welcome(msg)
-    p Big #{msg}
+block content
+    //Using mixins which can be used as functions or macros in Jinja2
+    mixin welcome(msg)
+        p Big #{msg}
 
-h1 hello
-+welcome(msg)
+    h1 hello
+    +welcome(msg)
