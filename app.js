@@ -9,8 +9,15 @@ app.set('port', process.env.PORT || 3000)
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
-app.all('*', (req,res) => {
+app.all('/', (req,res) => {
     res.render('index', {msg: "welcome to Robins node app"})
+})
+
+app.get('/test', (req,res) => {
+    res.render('dataexample', 
+    {msg: "welcome to Robins node app",
+    title: "Test",
+    body: "Body test"})
 })
 
 const server = http.createServer(app)
