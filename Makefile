@@ -11,4 +11,4 @@ test:
 	echo Ending test
 
 start:
-	node app
+	nodemon app
