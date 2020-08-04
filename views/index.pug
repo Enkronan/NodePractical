@@ -1,9 +1,17 @@
 extends layout
 
-block content
-    //Using mixins which can be used as functions or macros in Jinja2
-    mixin welcome(msg)
-        p Big #{msg}
+block page
+    - var menu = 'index'
 
-    h1 hello
-    +welcome(msg)
+block content
+    if (articles.length === 0)
+        | There's no published content yet.
+        a(href="/login") Log in
+        | to post and publish
+
+    else
+        each article, index in articles
+            div
+                h2
+                    a(href=`/articles/${article.slug}`)=article.title
+    
