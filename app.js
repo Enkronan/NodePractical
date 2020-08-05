@@ -27,6 +27,12 @@ app.get('/article', (req,res) => {
     text: "Test"})
 })
 
+app.get('/login', (req,res) => {
+    res.render('login', 
+    {title: "welcome to Robins node app",
+    text: "Test"})
+})
+
 const server = http.createServer(app)
 const boot = () => {
     server.listen(app.get('port'), () => {
