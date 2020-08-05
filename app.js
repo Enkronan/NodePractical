@@ -8,6 +8,7 @@ const app = express()
 app.set('port', process.env.PORT || 3000)
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
+app.use(express.static('public'))
 
 app.all('/', (req,res) => {
     res.render('index', {msg: "welcome to Robins node app", articles: []})
