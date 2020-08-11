@@ -1,6 +1,10 @@
 REPORTER = list
 MOCHA_OPTS = --ui tdd -c
 
+seeding:
+	echo Seeding blog-test *****************************************************
+	C:/Coding/NodeProject/seed.sh
+
 test:
 	clear
 	echo Starting test **********************
