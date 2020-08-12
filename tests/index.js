@@ -38,7 +38,27 @@ describe('server', () => {
         })
     })
 
+    describe('article page', () => {
+        it('should display text or 401', (done) => {
+            let n = seedArticles.length
+            seedArticles.forEach((item, index, list) => {
+                superagent.get(`http://localhost:${port}/articles/${seedArticles[index].slug}`)
+                    .end((error, response) => {
+                        if (item.published) {
+                            expect(error).to.be(null)
+                            expect(res.text).to.contain(seedArticles[index].text)
+                        } else {
+                            expect(error).to.be.ok
+                            expect(res.status).to.be(401)
+                        }
 
+                        if (index + 1 === n) {
+                            done()
+                        }
+                    })
+            })
+        })
+    })
 
     after(() => {
         shutdown()
