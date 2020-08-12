@@ -3,7 +3,7 @@ MOCHA_OPTS = --ui tdd -c
 
 seeding:
 	echo Seeding blog-test *****************************************************
-	C:/Coding/NodeProject/seed.sh
+	./seed.sh
 
 test:
 	clear
