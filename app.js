@@ -1,9 +1,23 @@
 const express = require('express')
-
+const routes = require('./routes')
 const http = require('http')
 const path = require('path')
+const mongoskin = require('mongoskin')
+const dbUrl = process.env.MONGOHQ_URL || 'mongodb://@localhost:27017/blog'
+
+const db = mongoskin.db(dbUrl)
+const collections = {
+    articles: db.collection('articles'),
+    users: db.collection('users')
+}
+
+const logger = require('morgan')
+const errorHandler = require('errorhandler')
+const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 
 const app = express()
+app.locals.appTitle = 'blog-express'
 
 app.set('port', process.env.PORT || 3000)
 app.set('views', path.join(__dirname, 'views'))
