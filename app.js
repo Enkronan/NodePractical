@@ -19,7 +19,7 @@ const methodOverride = require('method-override')
 const app = express()
 app.locals.appTitle = 'blog-express'
 
-app.user((req, res, next) => {
+app.use((req, res, next) => {
     if (!collections.articles || !collections.users) {
         return next (new Error('No collections.'))
     }
