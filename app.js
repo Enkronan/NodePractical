@@ -19,34 +19,54 @@ const methodOverride = require('method-override')
 const app = express()
 app.locals.appTitle = 'blog-express'
 
+app.user((req, res, next) => {
+    if (!collections.articles || !collections.users) {
+        return next (new Error('No collections.'))
+    }
+    req.collections = collections
+    return next()
+})
+
+// Config
 app.set('port', process.env.PORT || 3000)
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
-app.use(express.static('public'))
 
-app.all('/', (req,res) => {
-    res.render('index', {msg: "welcome to Robins node app", articles: []})
+// Middleware
+app.use(logger('dev'))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(methodOverride())
+app.use(require('stylus').middleware(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')))
+
+//Dev mode
+if (app.get('env') === 'development') {
+    app.use(errorHandler('dev'))
+}
+
+//Routes
+app.get('/', routes.index)
+app.get('/login', routes.user.login)
+app.post('/login', routes.user.authenticate)
+app.get('/logout', routes.user.logout)
+app.get('/admin', routes.article.admin)
+app.get('/post', routes.article.post)
+app.post('/post', routes.article.postArticle)
+app.get('/articles/:slug', routes.article.show)
+
+//REST API routes
+app.get('/api/articles', routes.article.list)
+app.post('/api/articles', routes.article.add)
+app.put('/api/articles/:id', routes.article.edit)
+app.delete('/api/articles/:id', routes.article.del)
+
+//Catch all 404 route
+app.all('*', (req, res) => {
+    res.status(404).send()
 })
 
-app.get('/test', (req,res) => {
-    res.render('dataexample', 
-    {msg: "welcome to Robins node app",
-    title: "Test",
-    body: "Body test"})
-})
-
-app.get('/article', (req,res) => {
-    res.render('article', 
-    {title: "welcome to Robins node app",
-    text: "Test"})
-})
-
-app.get('/login', (req,res) => {
-    res.render('login', 
-    {title: "welcome to Robins node app",
-    text: "Test"})
-})
-
+//start server
 const server = http.createServer(app)
 const boot = () => {
     server.listen(app.get('port'), () => {
@@ -55,7 +75,7 @@ const boot = () => {
 }
 
 const shutdown = () => {
-    server.close()
+    server.close(process.exit)
 }
 
 if (require.main === module ){
