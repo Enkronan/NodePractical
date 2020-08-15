@@ -1,4 +1,4 @@
-$ajaxSetup({
+$.ajaxSetup({
     xhrFields: {withCredentials: true},
     error: function (xhr, status, error) {
         $('.alert').removeClass('hidden')
