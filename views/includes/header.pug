@@ -2,3 +2,9 @@
     ul.nav
         li(class=(menu === "index") ? "active" : "")
             a(href="/") Home
+        if locals.admin
+            li(class=(menu === "index") ? "active" : "")
+                a(href="/logout") logout
+        else
+            li(class=(menu === "index") ? "active" : "")
+                a(href="/login") login
