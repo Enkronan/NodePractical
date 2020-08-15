@@ -1,5 +1,8 @@
+export
+
 REPORTER = list
 MOCHA_OPTS = --ui tdd -c
+SECRET_KEY = 0b8550b438679920aee2e0ea5fcc8e41
 
 seeding:
 	echo Seeding blog-test *****************************************************

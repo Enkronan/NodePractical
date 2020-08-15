@@ -40,10 +40,10 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(methodOverride())
 app.use(require('stylus').middleware(path.join(__dirname, 'public')))
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(session({secret: "0b8550b438679920aee2e0ea5fcc8e41",
+app.use(session({secret: process.env.SECRET_KEY,
     resave: true,
     saveUninitialized: true}))
-    
+
 //authentication for templates
 app.use(function(req,res,next) {
     if (req.session && req.session.admin) {
