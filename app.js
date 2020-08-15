@@ -3,6 +3,7 @@ const routes = require('./routes')
 const http = require('http')
 const path = require('path')
 const mongoskin = require('mongoskin')
+const session = require('express-session')
 const dbUrl = process.env.MONGOHQ_URL || 'mongodb://@localhost:27017/blog'
 
 const db = mongoskin.db(dbUrl)
@@ -39,6 +40,23 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(methodOverride())
 app.use(require('stylus').middleware(path.join(__dirname, 'public')))
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(session({secret: "0b8550b438679920aee2e0ea5fcc8e41"}))
+//authentication for templates
+app.use(function(req,res,next) {
+    if (req.session && req.session.admin) {
+        res.locals.admin = true
+    }
+    next()
+})
+//authorization
+const authorize = (req,res,next) => {
+    if (req.session && req.session.admin){
+        return next()
+    }
+    else {
+        return res.status(401).send()
+    }
+}
 
 //Dev mode
 if (app.get('env') === 'development') {
