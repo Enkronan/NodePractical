@@ -29,8 +29,3 @@ td.action {
 .alert {
   margin-top: 20px;
 }
-
-.nav{
-  display: flex;
-  flex-direction: row;
-}
