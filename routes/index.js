@@ -1,7 +1,7 @@
 exports.article = require('./article')
 exports.user = require('./user')
 
-exports.index = (res, req, next) => {
+exports.index = (req, res, next) => {
     req.collections.articles
         .find({published:true}, {sort: {_id: -1}})
         .toArray((error, articles) => {
