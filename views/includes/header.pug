@@ -1,10 +1,12 @@
 .menu
-    ul.nav
+    ul.nav.nav-pills
         li(class=(menu === "index") ? "active" : "")
             a(href="/") Home
         if locals.admin
-            li(class=(menu === "index") ? "active" : "")
+            li(class=(menu === "logout") ? "active" : "")
                 a(href="/logout") logout
+            li(class=(menu === "admin") ? "active" : "")
+                a(href="/admin") admin    
         else
-            li(class=(menu === "index") ? "active" : "")
+            li(class=(menu === "login") ? "active" : "")
                 a(href="/login") login
